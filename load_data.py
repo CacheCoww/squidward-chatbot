@@ -18,13 +18,19 @@ import unicodedata
 import codecs
 from io import open
 import itertools
-import math
+
+from parse_transcript import *
+
+datafile = os.path.join("squid_linePairs.txt")
+corpus_name = "Squidward corpus"
+corpus = os.path.join("data", corpus_name)
 
 # Default word tokens
 PAD_token = 0  # Used for padding short sentences
 SOS_token = 1  # Start-of-sentence token
 EOS_token = 2  # End-of-sentence token
 
+#Voc class for creating discrete numerical space mapping words to index values
 class Voc:
     def __init__(self, name):
         self.name = name
@@ -71,7 +77,8 @@ class Voc:
             for word in keep_words:
                 self.addWord(word)
 
-MAX_LENGTH = 9  # Maximum sentence length to consider
+MAX_LENGTH = 10  # Maximum sentence length to consider
+MIN_COUNT = 3    # Minimum word count threshold for trimming
 
 
 def trimRareWords(voc, pairs, MIN_COUNT):
@@ -105,7 +112,7 @@ def trimRareWords(voc, pairs, MIN_COUNT):
 def unicodeToAscii(s):
     return ''.join(
         c for c in unicodedata.normalize('NFD', s)
-        if unicodedata.category(c) != 'Mn'  
+        if unicodedata.category(c) != 'Mn'
     )
 
 # Lowercase, trim, and remove non-letter characters
@@ -147,6 +154,16 @@ def loadPrepareData(transcripts, transcript_name, datafile, save_dir):
     for pair in pairs:
         voc.addSentence(pair[0])
         voc.addSentence(pair[1])
- #   print("Counted words:", voc.num_words)
+    print("Counted words:", voc.num_words)
     return voc, pairs
 
+
+# Load/Assemble voc and pairs
+save_dir = os.path.join("data", "save")
+voc, pairs = loadPrepareData(corpus, corpus_name, datafile, save_dir)
+# Print some pairs to validate
+print("\npairs:")
+for pair in pairs[:10]:
+    print(pair)
+# Trim voc and pairs
+pairs = trimRareWords(voc, pairs, MIN_COUNT)

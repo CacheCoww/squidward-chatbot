@@ -39,14 +39,12 @@ corpus_name = filename
 
 
 hidden_size = 256
-encoder1 = EncoderRNN(voc.num_words, hidden_size).to(device)
-attn_decoder1 = AttnDecoderRNN(hidden_size, voc.num_words, dropout_p=0.1).to(device)
+#encoder1 = EncoderRNN(voc.num_words, hidden_size).to(device)
+#attn_decoder1 = AttnDecoderRNN(hidden_size, voc.num_words, dropout_p=0.1).to(device)
 
-#trainIters(encoder1, attn_decoder1, 75000, print_every=50)
-
+trainIters(encoder1, attn_decoder1, 20000, print_every=2500)
+'''
 output_words, attentions = evaluate(
     encoder1, attn_decoder1, "good morning")
 print('output =', ' '.join(output_words))
-
-# Begin chatting (uncomment and run the following line to begin)
-# evaluateInput(encoder, decoder, searcher, voc)
+'''
