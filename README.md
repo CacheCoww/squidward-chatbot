@@ -13,3 +13,9 @@ The first model was not very coherent so I added in the lines from the other cha
  - Created functions to extract sentence-response pairs for a specified character [
  - Defined model classes and ran data through models
  - Integrated model into Flask application
+
+## To Do
+ - Optimize models for better performance
+ - Train model on AWS 
+ - Deploy model on Heroku
+ - Improve Frontend design
