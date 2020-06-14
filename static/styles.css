@@ -1,0 +1,125 @@
+
+html{ height: 95vh; margin: 10px;}
+body, section { height: 100%; width: 100%; }
+
+.top-bar {
+    background: rgb(95, 119, 122);
+    /*background: rgb(5, 163, 111); */
+    position: relative;
+    overflow: hidden; 
+}
+
+.form{
+    background: rgb(95, 119, 122);
+    padding: 8px;
+}
+  
+@font-face {
+    font-family: 'Krabby Patty';
+    src: url('Krabby_Patty.ttf');
+}   
+ 
+h1, h2, h3 { font-family: 'Krabby Patty' }
+.top-text{
+      align-content: center;
+      align-self: center;
+      position: relative;
+}
+  
+.top-bar::before {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: 0;
+    right: 0;
+    bottom: -100%;
+    opacity: 0.25;
+    background: radial-gradient(rgb(54, 122, 45), rgb(12, 140, 145));
+}
+
+  .top-bar > * {
+    position: relative;
+  }
+
+
+  ol{
+    height: 50%;
+    overflow: auto;
+  }
+
+.conversation {
+	list-style: none;
+	background: #1d1d1db7;
+	margin: 0;
+	padding: 0 0 50px 0;
+}
+
+.conversation li{
+	list-style: none;
+    padding: 0 0 50px 0;
+    padding: 0.5rem;
+	overflow: hidden;
+    margin-bottom: 5px;
+}
+
+
+.messages {
+   
+    
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
+}
+div li{
+    margin-left: 50px;
+}
+
+.you{
+
+    margin-left: 10px;
+    margin-right: 10px;
+    background: #43a8af;
+    justify-content: flex-end;
+  /* switch vertical layout */
+    align-items: flex-end;
+    text-justify: right;
+}
+
+.other{
+
+    margin-left: 10px;
+    margin-right: 10px;
+    background: #33995d;
+    
+}
+
+.messages time {
+    font-size: 0.7rem;
+    color: #ccc;
+}
+
+.chatname{
+    font-weight: bold;
+}
+
+body{
+    /* Background image is centered vertically and horizontally at all times */
+  background-position: center center;
+  
+  /* Background image doesn't tile */
+  background-repeat: no-repeat;
+  
+  /* Background image is fixed in the viewport so that it doesn't move when 
+     the content's height is greater than the image's height */
+  background-attachment: fixed;
+  
+  /* This is what makes the background image rescale based
+     on the container's size */
+  background-size: cover;
+  
+  /* Set a background color that will be displayed
+     while the background image is loading */
+  background-color: #464646;
+  background-image: linear-gradient(to right, rgba(138, 226, 157, 0.925), #47afc2);
+  /*  background-image: url('/static/sbocean.jpg'); */
+}

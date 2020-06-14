@@ -35,7 +35,12 @@ EOS_token = 2  # End-of-sentence token
 
 
 def indexesFromSentence(voc, sentence):
-    return [voc.word2index[word] for word in sentence.split(' ')] + [EOS_token]
+    #Modified function to replace unknown words with random words from Voc object
+    checkinput = sentence.split(' ')
+    for i in range (len(checkinput)):
+        if checkinput[i] not in voc.word2index:
+            checkinput[i] = voc.index2word[random.randint(3, voc.num_words)]
+    return [voc.word2index[word] for word in checkinput] + [EOS_token]
 
 
 def zeroPadding(l, fillvalue=PAD_token):
@@ -83,15 +88,15 @@ def batch2TrainData(voc, pair_batch):
 
 
 # Example for validation
-small_batch_size = 1
-batches = batch2TrainData(voc, [random.choice(pairs) for _ in range(small_batch_size)])
-input_variable, lengths, target_variable, mask, max_target_len = batches
+#small_batch_size = 1
+#batches = batch2TrainData(voc, [random.choice(pairs) for _ in range(small_batch_size)])
+#input_variable, lengths, target_variable, mask, max_target_len = batches
 
-print("input_variable:", input_variable)
-print("lengths:", lengths)
-print("target_variable:", target_variable)
-print("mask:", mask)
-print("max_target_len:", max_target_len)
+#print("input_variable:", input_variable)
+#print("lengths:", lengths)
+#print("target_variable:", target_variable)
+#print("mask:", mask)
+#print("max_target_len:", max_target_len)
 
 
 
@@ -384,12 +389,12 @@ def evaluate(encoder, decoder, searcher, voc, sentence, max_length=MAX_LENGTH):
     return decoded_words
 
 
-def evaluateInput(encoder, decoder, searcher, voc):
-    input_sentence = ''
+def evaluateInput(encoder, decoder, searcher, voc, input):
+    input_sentence = input
     while(1):
         try:
             # Get input sentence
-            input_sentence = input('> ')
+            input_sentence = input
             # Check if it is quit case
             if input_sentence == 'q' or input_sentence == 'quit': break
             # Normalize sentence
@@ -398,7 +403,7 @@ def evaluateInput(encoder, decoder, searcher, voc):
             output_words = evaluate(encoder, decoder, searcher, voc, input_sentence)
             # Format and print response sentence
             output_words[:] = [x for x in output_words if not (x == 'EOS' or x == 'PAD')]
-            print('Bot:', ' '.join(output_words))
+            return('Bot:', ' '.join(output_words))
 
         except KeyError:
             print("Error: Encountered unknown word.")
@@ -505,13 +510,17 @@ trainIters(model_name, voc, pairs, encoder, decoder, encoder_optimizer, decoder_
 
 
 
+def main(input):
+    #RUN EVALUATION
+    encoder.eval()
+    decoder.eval()
 
-#RUN EVALUATION
-encoder.eval()
-decoder.eval()
+    # Initialize search module
+    searcher = GreedySearchDecoder(encoder, decoder)
 
-# Initialize search module
-searcher = GreedySearchDecoder(encoder, decoder)
+    # Begin chatting (uncomment and run the following line to begin)
+    result = evaluateInput(encoder, decoder, searcher, voc, input)
+    return result
 
-# Begin chatting (uncomment and run the following line to begin)
-evaluateInput(encoder, decoder, searcher, voc)
+if __name__ == "__main__":
+    main()
