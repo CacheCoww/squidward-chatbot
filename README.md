@@ -17,5 +17,6 @@ The first model was not very coherent so I added in the lines from the other cha
 
 ## To Do
  - Optimize models for better performance
+ - Fix inconsistent punctuation
  - Improve Frontend design
  - The model is too large to upload to GitHub so figure out workaround
